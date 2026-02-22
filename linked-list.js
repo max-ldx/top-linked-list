@@ -13,7 +13,7 @@ class Node {
     set next(node) { this.#next = node; }
 }
 
-class LinkedList {
+export class LinkedList {
     #head = null;
     #size = 0;
 
