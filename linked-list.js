@@ -71,13 +71,26 @@ class LinkedList {
 
     contains(value) {
         let temp = this.#head;
-        while (temp.next) {
+        while (temp) {
             if (temp.value === value) {
                 return true;
             }
             temp = temp.next;
         }
         return false;
+    }
+
+    findIndex(value) {
+        let i = 0;
+        let temp = this.#head;
+        while (temp) {
+            if (temp.value === value) {
+                return i;
+            }
+            ++i;
+            temp = temp.next;
+        }
+        return -1;
     }
 }
 
@@ -93,3 +106,5 @@ console.log("Nouvel index 0 :", l.at(0));       // Affiche 1
 console.log("Taille actuelle :", l.size());     // Affiche 3
 console.log(l.contains(1));
 console.log(l.contains(5));
+console.log(l.findIndex(3));
+console.log(l.findIndex(5));
