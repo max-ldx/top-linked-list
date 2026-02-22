@@ -1,35 +1,36 @@
+class Node {
+    #value;
+    #next;
+
+    constructor(value = null, next = null) {
+        this.#value = value;
+        this.#next = next;
+    }
+
+    get value() { return this.#value; }
+    set value(val) { this.#value = val; }
+    get next() { return this.#next; }
+    set next(node) { this.#next = node; }
+}
+
 class LinkedList {
     #head = null;
     #size = 0;
 
     append(value) {
-        const node = new Node(value);
-
-        if (this.#head === null) {
-            this.#head = node;
+        const newNode = new Node(value);
+        if (!this.#head) {
+            this.#head = newNode;
         } else {
             let temp = this.#head;
-            while (temp.next !== null) {
-                temp = temp.next;
-            }
-
-            temp.next = node;
+            while (temp.next) temp = temp.next;
+            temp.next = newNode;
         }
-
         this.#size++;
     }
 
     prepend(value) {
-        const node = new Node(value);
-
-        if (this.#head === null) {
-            this.#head = node;
-        } else {
-            const temp = this.#head;
-            this.#head = node;
-            this.#head.next = temp;
-        }
-
+        this.#head = new Node(value, this.#head);
         this.#size++;
     }
 
@@ -38,73 +39,44 @@ class LinkedList {
     }
 
     head() {
-        if (this.#head === null) {
-            return undefined;
-        }
-
-        return this.#head.value;
+        return this.#head ? this.#head.value : undefined;
     }
 
     tail() {
-        if (this.#head === null) {
-            return undefined;
-        }
-
+        if (!this.#head) return undefined;
         let temp = this.#head;
-        while (temp.next !== null) {
-            temp = temp.next;
-        }
-
+        while (temp.next) temp = temp.next;
         return temp.value;
     }
 
     at(index) {
-        let i = 0;
+        if (index < 0 || index >= this.#size) return undefined;
 
         let temp = this.#head;
-        while (temp.next !== null && i < index) {
-            i++;
+        for (let i = 0; i < index; i++) {
             temp = temp.next;
         }
+        return temp.value;
+    }
 
-        if (i === index) {
-            return temp.value;
-        }
+    pop() {
+        if (!this.#head) return undefined;
 
-        return undefined;
+        const removedValue = this.#head.value;
+        this.#head = this.#head.next;
+        this.#size--;
+
+        return removedValue;
     }
 }
 
-class Node {
-    #value = null;
-    #next = null;
-
-    constructor(value = null, next = null) {
-        this.#value = value;
-        this.#next = next;
-    }
-
-    get value() {
-        return this.#value;
-    }
-
-    set value(value) {
-        this.#value = value;
-    }
-
-    get next() {
-        return this.#next;
-    }
-
-    set next(next) {
-        this.#next = next;
-    }
-}
-
+// --- Test ---
 const l = new LinkedList();
-l.append(1);
-l.append(2);
-l.append(3);
-l.prepend(5);
+l.append(1);  // [1]
+l.append(2);  // [1, 2]
+l.append(3);  // [1, 2, 3]
+l.prepend(5); // [5, 1, 2, 3]
 
-console.log(l.at(10))
+console.log("Valeur retirée (pop) :", l.pop()); // Retire 5
+console.log("Nouvel index 0 :", l.at(0));       // Affiche 1
+console.log("Taille actuelle :", l.size());     // Affiche 3
