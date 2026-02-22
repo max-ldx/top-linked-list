@@ -92,19 +92,22 @@ class LinkedList {
         }
         return -1;
     }
+
+    toString() {
+        if (this.#head === null) {
+            return "";
+        }
+
+        let s = "";
+        let temp = this.#head;
+        while (temp) {
+            s += `(${temp.value})`;
+            if (temp.next) {
+                s += " -> ";
+            }
+            temp = temp.next;
+        }
+
+        return s;
+    }
 }
-
-// --- Test ---
-const l = new LinkedList();
-l.append(1);  // [1]
-l.append(2);  // [1, 2]
-l.append(3);  // [1, 2, 3]
-l.prepend(5); // [5, 1, 2, 3]
-
-console.log("Valeur retirée (pop) :", l.pop()); // Retire 5
-console.log("Nouvel index 0 :", l.at(0));       // Affiche 1
-console.log("Taille actuelle :", l.size());     // Affiche 3
-console.log(l.contains(1));
-console.log(l.contains(5));
-console.log(l.findIndex(3));
-console.log(l.findIndex(5));
