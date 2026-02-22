@@ -57,6 +57,22 @@ class LinkedList {
 
         return temp.value;
     }
+
+    at(index) {
+        let i = 0;
+
+        let temp = this.#head;
+        while (temp.next !== null && i < index) {
+            i++;
+            temp = temp.next;
+        }
+
+        if (i === index) {
+            return temp.value;
+        }
+
+        return undefined;
+    }
 }
 
 class Node {
@@ -91,4 +107,4 @@ l.append(2);
 l.append(3);
 l.prepend(5);
 
-console.log(l)
+console.log(l.at(10))
