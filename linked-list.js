@@ -68,6 +68,17 @@ class LinkedList {
 
         return removedValue;
     }
+
+    contains(value) {
+        let temp = this.#head;
+        while (temp.next) {
+            if (temp.value === value) {
+                return true;
+            }
+            temp = temp.next;
+        }
+        return false;
+    }
 }
 
 // --- Test ---
@@ -80,3 +91,5 @@ l.prepend(5); // [5, 1, 2, 3]
 console.log("Valeur retirée (pop) :", l.pop()); // Retire 5
 console.log("Nouvel index 0 :", l.at(0));       // Affiche 1
 console.log("Taille actuelle :", l.size());     // Affiche 3
+console.log(l.contains(1));
+console.log(l.contains(5));
